@@ -1,0 +1,64 @@
+# .gitignore for BackEnd (ASP.NET Core / .NET) projects
+
+# Visual Studio / IDE
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.idea/
+
+# Build outputs
+bin/
+obj/
+artifacts/
+
+# Rider
+.idea/
+*.DotSettings.user
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Dotnet tool files
+.tools/
+
+# Entity Framework and database files
+*.db
+*.mdf
+*.ldf
+*.db-journal
+*.dbmdl
+
+# Local.settings (Azure Functions/local secrets)
+.local.settings.json
+
+# Logs
+logs/
+*.log
+
+# Publish output
+publish/
+
+# Runtime files
+*.pid
+*.seed
+
+# Secrets (do NOT commit secrets; keep managed by user secrets or environment)
+secrets.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test results
+TestResults/
+
+# package lock files (optional)
+project.lock.json
+
+# Ignore Visual Studio Code workspace settings
+*.code-workspace
