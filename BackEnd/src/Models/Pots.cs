@@ -1,6 +1,6 @@
 namespace BackEnd.src.Models;
 
-class Pots {
+public class Pots {
     public int id { get; set; }
     public string title { get; set; } = string.Empty;
     public decimal target_value { get; set; }

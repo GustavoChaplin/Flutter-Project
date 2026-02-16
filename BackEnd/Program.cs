@@ -65,11 +65,11 @@ app.UseRouting();
 
 app.UseMiddleware<Middleware>();
 
-// Use the controller middleware to handle HTTP requests.
-app.MapControllers();
-
 // Use the authorization middleware to authorize HTTP requests.
 app.UseAuthorization();
+
+// Use the controller middleware to handle HTTP requests.
+app.MapControllers();
 
 // Start the web server and begin accepting HTTP requests.
 app.Run();

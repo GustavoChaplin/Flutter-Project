@@ -1,6 +1,6 @@
 namespace BackEnd.src.Models;
 
-class RecurrentBills
+public class RecurrentBills
 {
     public int id { get; set; }
     public string title { get; set; } = string.Empty;

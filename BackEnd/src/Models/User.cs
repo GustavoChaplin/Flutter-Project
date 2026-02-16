@@ -1,6 +1,6 @@
 namespace BackEnd.src.Models;
 
-class Users
+public class Users
 {
     public int id { get; set; }
     public string user_name { get; set; } = string.Empty;

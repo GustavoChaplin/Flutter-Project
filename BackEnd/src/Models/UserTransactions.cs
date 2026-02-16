@@ -1,8 +1,8 @@
 namespace BackEnd.src.Models;
 
-class UserTransactions
+public class UserTransactions
 {
-    public int Id { get; set; }
+    public int id { get; set; }
     public string title { get; set; } = string.Empty;
     public string description_tran { get; set; } = string.Empty;
     public decimal value { get; set; }

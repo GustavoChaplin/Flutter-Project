@@ -55,5 +55,125 @@ namespace BackEnd.src.Repositories
             var result = await _db.QueryAsync<Users>(sql, parameters, commandType: CommandType.StoredProcedure);
             return result.FirstOrDefault();
         }
+
+        public Task<IEnumerable<Users>> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Users?> GetUserById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Users?> RegisterUser(Users user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Users?> LoginUser(Users user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Users?> UpdateUser(Users user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteUser(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<UserTransactions>> GetAllUserTransactions(int id_user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserTransactions?> GetUserTransactionById(int id_user, int id_transaction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserTransactions?> CreateUserTransaction(UserTransactions transaction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserTransactions?> UpdateUserTransaction(UserTransactions transaction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Budgets>> GetAllUserBudgets(int id_user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Budgets?> GetUserBudgetById(int id_user, int id_budget)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Budgets?> CreateUserBudget(Budgets budget)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Budgets?> UpdateUserBudget(Budgets budget)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteUserBudget(int id_user, int id_budget)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Pots>> GetAllUserPots(int id_user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Pots?> GetUserPotById(int id_user, int id_pot)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Pots?> CreateUserPot(Pots pot)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Pots?> UpdateUserPot(Pots pot)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteUserPot(int id_user, int id_pot)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<RecurrentBills>> GetAllUserRecurrentBills(int id_user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RecurrentBills?> GetUserRecurrentBillById(int id_user, int id_recurrent_bill)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RecurrentBills?> CreateUserRecurrentBill(RecurrentBills bill)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RecurrentBills?> UpdateUserRecurrentBill(RecurrentBills bill)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

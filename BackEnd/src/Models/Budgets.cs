@@ -1,6 +1,6 @@
 namespace BackEnd.src.Models;
 
-class Budgets
+public class Budgets
 {
     public int id { get; set; }
     public string title { get; set; } = string.Empty;

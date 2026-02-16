@@ -3,7 +3,7 @@ using BackEnd.src.Models;
 
 namespace BackEnd.src.Data
 {
-    class ApplicationContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<Users> Users { get; set; }
         public DbSet<Budgets> Budgets { get; set; }
