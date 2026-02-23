@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutterproject/Requests/UserRequest.dart';
 
 class UserState extends ChangeNotifier {
-  String? _user;
+  User? _user;
+  int? pageIndex = 0;
 
-  String? get user => _user;
+  User? get user => _user;
 
-  void setUser(String value) {
+  void setUser(User value) {
     _user = value;
+    notifyListeners();
+  }
+
+  void setPageIndex(int value) {
+    pageIndex = value;
     notifyListeners();
   }
 }

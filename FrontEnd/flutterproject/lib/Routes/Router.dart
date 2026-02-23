@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterproject/Pages/home.dart';
 import 'package:go_router/go_router.dart';
 import '../pages/login.dart';
 import '../pages/register.dart';
@@ -23,13 +24,13 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) =>
           AppLayout(child: RegisterPage()),
     ),
-    /*
+    
     GoRoute(
       path: '/profile/:username',
       builder: (BuildContext context, GoRouterState state) {
         final String username = state.pathParameters['username']!;
-        return AppLayout(child: ProfilePage(username: username));
+        return AppLayout(child: HomePage(username: username));
       },
-    ),*/
+    )
   ],
 );
