@@ -16,6 +16,8 @@ dependencies:
   provider: ^6.1.5+1
   dio: ^5.9.1
   flutter_secure_storage: ^10.0.0
+  easy_pie_chart: ^1.0.2
+  flutter_layout_grid: ^2.0.8
 
 dev_dependencies:
   flutter_test:
