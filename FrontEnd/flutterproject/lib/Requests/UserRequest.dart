@@ -3,10 +3,11 @@ import 'package:flutterproject/Requests/auth_helper.dart';
 
 class User {
   int? id;
-    String? username;
+    String? user_name;
+    String? sur_name;
     String? email;
     String? cpf;
-    String? password;
+    String? user_password;
     String? gender;
     int? income;
     int? expenses;
@@ -14,10 +15,11 @@ class User {
 
     User({
       this.id,
-      this.username,
+      this.user_name,
+      this.sur_name,
       this.email,
       this.cpf,
-      this.password,
+      this.user_password,
       this.gender,
       this.income,
       this.expenses,
@@ -27,14 +29,15 @@ class User {
     factory User.fromJson(Map<String, dynamic> json) {
       return User(
         id: json['id'],
-        username: json['username'],
+        user_name: json['user_name'],
+        sur_name: json['sur_name'],
         email: json['email'],
         cpf: json['cpf'],
-        password: json['password'],
+        user_password: json['user_password'],
         gender: json['gender'],
         income: json['income'],
         expenses: json['expenses'],
-        balance: json['balance']
+        balance: json['balance'],
       );
     }
 }
@@ -54,14 +57,17 @@ class UserRequest {
 }
 
 class UserService {
-  final Dio dio = Dio(BaseOptions(baseUrl: 'http://localhost:5154/api'));
+  final Dio dio = Dio(BaseOptions(baseUrl: 'http://localhost:5154/api/Users'));
 
-  Future<UserRequest?> register(String username, String email, String password) async {
+  Future<UserRequest?> registerUser(String user_name, String sur_name, String email, String cpf, String user_password, String gender) async {
     try {
-      final response = await dio.post('/User/register', data: {
-        'username': username,
+      final response = await dio.post('/register', data: {
+        'user_name': user_name,
+        'sur_name': sur_name,
         'email': email,
-        'password': password,
+        'cpf': cpf,
+        'user_password': user_password,
+        'gender': gender
       });
 
       if (response.statusCode == 200) {
@@ -76,11 +82,11 @@ class UserService {
     }
   }
 
-  Future<UserRequest?> login(String username, String password) async {
+  Future<UserRequest?> login(String cpf, String user_password) async {
     try {
-      final response = await dio.post('/User/login', data: {
-        'username': username,
-        'password': password,
+      final response = await dio.post('/login', data: {
+        'cpf': cpf,
+        'user_password': user_password,
       });
 
       if (response.statusCode == 200) {
@@ -95,10 +101,10 @@ class UserService {
     }
   }
 
-  Future<User?> getUserDetails(String username) async {
+  Future<User?> getUserDetails(String cpf) async {
     try {
       final headers = await authHeaders();
-      final response = await dio.get('/User/$username', options: Options(
+      final response = await dio.get('/$cpf', options: Options(
         headers: {
           'Authorization': headers['Authorization'] ?? '',
         },
@@ -118,7 +124,7 @@ class UserService {
   Future<bool> updateUser(int id, String username, String email) async {
     try {
       final headers = await authHeaders();
-      final response = await dio.put('/User/$id', data: {
+      final response = await dio.put('/$id', data: {
         'username': username,
         'email': email,
       }, options: Options(
@@ -142,7 +148,7 @@ class UserService {
   Future<bool> deleteUser(int id) async {
     try {
       final headers = await authHeaders();
-      final response = await dio.delete('/User/$id', options: Options(
+      final response = await dio.delete('/$id', options: Options(
         headers: {
           'Authorization': headers['Authorization'] ?? '',
         },

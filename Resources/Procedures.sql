@@ -22,6 +22,29 @@ begin
 	end catch
 end
 GO
+
+create procedure pLoginUser 
+	@CPF char(11),
+	@Password varchar(100)
+as
+begin
+	if exists(
+		select top 1 1 from users u
+		where u.cpf = @CPF
+		and u.user_password = @Password
+	)
+	begin
+		return 1;	
+	end
+
+	else
+	begin
+		return 0;
+	end
+end
+
+GO
+
 CREATE procedure pDeleteUser
 	@id int
 as

@@ -1,6 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutterproject/Requests/UserRequest.dart';
+import 'package:flutterproject/States/user_state.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,6 +20,10 @@ class _LoginPage extends State<LoginPage>{
     filter: { "#": RegExp(r'[0-9]') },
   );
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final UserService userService = UserService();
+  final UserState userState = UserState();
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +141,7 @@ class _LoginPage extends State<LoginPage>{
                             }*/
                             return null;
                           },
+                          controller: _cpfController,
                         ),
 
                         SizedBox(height: 32),
@@ -163,7 +172,8 @@ class _LoginPage extends State<LoginPage>{
                               return 'Insert a Password';
                             }
                             return null;
-                          }
+                          },
+                          controller: _passwordController,
                         ),
 
                         SizedBox(height: 50),
@@ -171,7 +181,26 @@ class _LoginPage extends State<LoginPage>{
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()){}
+                              if (_formKey.currentState!.validate()){
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Processing Data'))
+                                );
+
+                                var unformattedCpf = _cpfController.text.replaceAll(".", "").replaceAll("-", "");
+                                userService.login(unformattedCpf, _passwordController.text)
+                                .then((value) => {
+                                  if(value != null){
+                                    FlutterSecureStorage().write(key: "token", value: value.token),
+                                    userState.setUser(userService.getUserDetails(unformattedCpf) as User),
+                                    context.go('/home'),
+                                  }
+                                  else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Invalid CPF or Password'))
+                                    ),
+                                  }
+                                });
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFFE6E2D9),
@@ -191,6 +220,7 @@ class _LoginPage extends State<LoginPage>{
                         Center(
                         child: TextButton(
                           onPressed: () {
+                            context.go('/register');
                           },
                           child: RichText(
                             text: TextSpan(

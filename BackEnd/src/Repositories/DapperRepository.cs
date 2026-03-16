@@ -19,43 +19,6 @@ namespace BackEnd.src.Repositories
             _db = db;
         }
 
-        // Example: call a stored procedure that returns all users.
-        public async Task<IEnumerable<Users>> GetAllUsersAsync()
-        {
-            var sql = "dbo.GetAllUsers";
-            // Dapper will map columns returned by the procedure to properties on Users by name.
-            return await _db.QueryAsync<Users>(sql, commandType: CommandType.StoredProcedure);
-        }
-
-        // Example: call a stored procedure that returns a single user by id.
-        public async Task<Users?> GetByIdAsync(int id)
-        {
-            var sql = "dbo.GetUserById"; // replace with your proc name
-            var result = await _db.QueryAsync<Users>(sql, new { Id = id }, commandType: CommandType.StoredProcedure);
-            return result.FirstOrDefault();
-        }
-
-        public async Task<Users?> CreateUserAsync(Users user)
-        {
-            var sql = "dbo.CreateUser"; // replace with your proc name
-            var parameters = new
-            {
-                user_name = "Teste",
-                sur_name = "User",
-                email = "teste@example.com",
-                password = "password123",
-                cpf = "12345678900",
-                income = 5000.00m,
-                expenses = 2000.00m,
-                balance = 3000.00m,
-                gender = "F",
-                created_at = DateTime.UtcNow
-
-            };
-            var result = await _db.QueryAsync<Users>(sql, parameters, commandType: CommandType.StoredProcedure);
-            return result.FirstOrDefault();
-        }
-
         public Task<IEnumerable<Users>> GetAllUsers()
         {
             throw new NotImplementedException();
@@ -66,14 +29,75 @@ namespace BackEnd.src.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Users?> RegisterUser(Users user)
+        public async Task<bool?> RegisterUser(Users user)
         {
-            throw new NotImplementedException();
+            var sql = "dbo.pCreateUser";
+            var parameters = new
+            {
+                fname = user.user_name,
+                lname = user.sur_name,
+                email = user.email,
+                password = user.user_password,
+                cpf = user.cpf,
+                gender = user.gender,
+            };
+
+            var result = _db.Query<Users>(sql, parameters, commandType: CommandType.StoredProcedure);
+            Console.WriteLine(result);
+            if (result != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public Task<Users?> LoginUser(Users user)
+        public async Task<bool?> LoginUser(Users user)
         {
-            throw new NotImplementedException();
+            var sql = "dbo.pLoginUser";
+
+            var parameters = new
+            {
+                cpf = user.cpf,
+                password = user.user_password,
+            };
+
+            var resultTask = await _db.QueryAsync<int>(sql, parameters, commandType: CommandType.StoredProcedure);
+            var count = resultTask.FirstOrDefault();
+            Console.WriteLine(count);
+            if (count == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+         public async Task<Users?> GetUserDetails(string cpf)
+        {
+            var sql = "dbo.pGetUserDetails";
+
+            var parameters = new
+            {
+                cpf = cpf,
+            };
+
+            var result = _db.Query<Users>(sql, parameters, commandType: CommandType.StoredProcedure);
+            var user = result.FirstOrDefault();
+            Console.WriteLine(user);
+            if (user != null)
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public Task<Users?> UpdateUser(Users user)

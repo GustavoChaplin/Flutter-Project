@@ -7,9 +7,9 @@ namespace BackEnd.src.Repositories
     internal interface IApplicationRepository
     {
         Task<IEnumerable<Users>> GetAllUsers();
-        Task<Users?> GetUserById(int id);
-        Task<Users?> RegisterUser(Users user);
-        Task<Users?> LoginUser(Users user);
+        Task<Users?> GetUserDetails(string cpf);
+        Task<bool?> RegisterUser(Users user);
+        Task<bool?> LoginUser(Users user);
         Task<Users?> UpdateUser(Users user);
         Task<bool> DeleteUser(int id);
         Task<IEnumerable<UserTransactions>> GetAllUserTransactions(int id_user);

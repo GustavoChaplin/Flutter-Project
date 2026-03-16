@@ -1,3 +1,4 @@
+using System.Runtime.ConstrainedExecution;
 using BackEnd.src.Data;
 using BackEnd.src.Models;
 using BackEnd.src.Repositories;
@@ -26,37 +27,43 @@ namespace BackEnd.src.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUserById(int id)
+        [HttpGet("{cpf}")]
+        public async Task<ActionResult<Users>> GetUserDetails(string cpf)
         {
-            var user = await _repository.GetUserById(id);
+            var user = await _repository.GetUserDetails(cpf);
             if (user == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(new { user });
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<Users>> RegisterUser(Users user)
         {
             var createdUser = await _repository.RegisterUser(user);
-            if (createdUser == null)
+            if (createdUser == false)
             {
                 return BadRequest("User registration failed");
             }
-            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.id }, createdUser);
+
+            var secHandler = new SecurityHandler("543wefadsadfgasfqwadc654332adsfgdsas");
+            var token = secHandler.CreateToken(user.email);
+            return Ok(new { token });
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<Users>> LoginUser(Users user)
         {
             var loggedInUser = await _repository.LoginUser(user);
-            if (loggedInUser == null)
+            if (loggedInUser == false)
             {
-                return Unauthorized("Invalid email or password");
+                return Unauthorized("Invalid CPF or password");
             }
-            return Ok(loggedInUser);
+
+            var secHandler = new SecurityHandler("543wefadsadfgasfqwadc654332adsfgdsas");
+            var token = secHandler.CreateToken(user.email);
+            return Ok(new { token });
         }
 
         [HttpPut("{id}")]
